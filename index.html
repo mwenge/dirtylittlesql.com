@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf8">
+  <title>Dirty Little SQL Notebook</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/hint/show-hint.css">
+  <link rel="stylesheet" href="demo.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/hint/sql-hint.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/hint/show-hint.js"></script>
+  <script type="text/javascript" src="//unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+
+</head>
+
+<body>
+  <div class="banner">
+    <div class="logo">
+      <div>DIRTY</div>
+      <div>LITTLE</div>
+      <div>SQL</div>
+    </div>
+    <input class="button" type='file' id='csvfile' style="display:none">
+    <div class="fileselect" style="float:right;" id="dbbutton">
+      <input class="button" type='file' id='dbfile' style="display:none">
+      <div class="logo" style="float:left;">
+        <input class="button" type="button" value="+">
+      </div>
+      <div class="logo" style="float:left;">
+        <div>IMPORT</div>
+        <div>SQLITE</div>
+        <div>DB</div>
+      </div>
+    </div>
+    <div class="fileselect" style="float:right;" id="vsvbutton">
+      <input class="button" type='file' id='vsvfile' style="display:none">
+      <div class="logo" style="float:left;">
+        <input class="button" type="button" value="+">
+      </div>
+      <div class="logo" style="float:left;">
+        <div>CSV</div>
+        <div>TXT</div>
+        <div>XLS</div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar" id="sidebar"></div>
+  <header class="status" id="status"></header>
+  <main>
+    <div id="container"></div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/sql/sql.min.js"></script>
+
+  <footer>
+    By mwenge (<a href='https://github.com/mwenge'>mwenge</a>).
+    Based on sql.js (<a href='https://github.com/sql-js/sql.js'>sql.js</a>).
+  </footer>
+
+  <script type="text/javascript" src="gui.js"></script>
+</body>
+
+</html>

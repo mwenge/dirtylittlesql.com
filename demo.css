@@ -1,0 +1,141 @@
+@font-face {
+  font-family: 'ABCFavoritMono';
+  font-style: normal;
+  font-weight: 400;
+  src: url(ABCFavoritMono-Light.woff) format('truetype');
+}
+html {
+	margin:auto;
+  margin-top: 5vh;
+  margin-left: 1vw;
+	width:80%;
+}
+
+.status {
+  background-color: white;
+  height: 3vh;
+  z-index: 99999;
+  font-family: 'ABCFavoritMono';
+  font-size: 0.6vw;
+  color: blue;
+}
+.banner {
+  position: fixed;
+  top: 0px;
+  left: 20px;
+  right: 40px;
+  height: 5vh;
+  width: 90%;
+  background-color: white;
+  z-index: 99999;
+}
+.logo {
+  font-family: 'ABCFavoritMono';
+  font-size: 0.6vw;
+  font-weight: bold;
+  display: inline-block;
+  padding: 0 0.4vw;
+  color: white;
+  background-color: black;
+  vertical-align: center;
+  height: 5vh;
+}
+
+.sidebar {
+  font-family: 'ABCFavoritMono';
+  font-size: 0.6vw;
+  position: fixed;
+  top: 10vh;
+  right: 0px;
+  height: 90vh;
+  width: 18%;
+}
+.sidebar>table {
+  border: none;
+  border-collapse: collapse;
+}
+body{
+	padding: 10px 20px;
+}
+
+.tips {
+  font-size: 0.5vw;
+}
+
+h1 {
+	text-align: center;
+	color: #222;
+	margin: 0 0 30px;
+}
+
+.fileselect {
+  margin: 0 0.5vw;
+  display: inline-block;
+  height: 5vh;
+}
+.button {
+	color: white;
+	background: linear-gradient(#000, #222);
+  background-color: black;
+	border: 1px solid #222;
+	padding: 7px;
+	transition: .3s;
+	font-family: ubuntu, sans-serif;
+	font-size: 1vw;
+  height: 5vh;
+}
+
+.button:active {
+	background: linear-gradient(#ddd, #eee);
+}
+
+.button:hover, button:focus {
+	box-shadow: 0 0 2px #222;
+}
+
+#execute {
+	margin-top: 5px;;
+	width: 10%;
+	min-width:100px;
+}
+
+.CodeMirror {
+  border: 1px solid #222;
+  height: auto;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.error {
+	color:red;
+	transition:.5s;
+	overflow:hidden;
+	margin: 15px;
+}
+
+.output {
+	overflow: auto;
+  max-height: 40vh;
+}
+
+.output>table {
+	width:auto;
+	margin:auto;
+	border:1px solid black;
+ 	border-collapse:collapse;
+ 	margin-bottom:10px;
+}
+
+.output>table>thead>tr>th {
+	border:1px solid #777;
+}
+.output>table>tbody>tr>td {
+	border:1px solid #777;
+}
+
+footer {
+	font-size:.8em;
+	color: #222;
+}

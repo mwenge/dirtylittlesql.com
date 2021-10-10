@@ -1,0 +1,15 @@
+@font-face { 
+  font-family: 'Favorit-Mono'; 
+  font-weight: normal;
+  src: url('//partners.rebelmouse.com/IEEE/FavoritMono/ABCFavoritMono-Regular.woff2') format('woff2'),
+  url('//partners.rebelmouse.com/IEEE/FavoritMono/ABCFavoritMono-Regular.woff') format('woff'); 
+  font-display:swap;
+}
+
+@font-face { 
+  font-family: 'Favorit-Mono'; 
+  font-weight: 100;
+  src: url('//partners.rebelmouse.com/IEEE/FavoritMono/ABCFavoritMono-Light.woff2') format('woff2'),
+  url('//partners.rebelmouse.com/IEEE/FavoritMono/ABCFavoritMono-Light.woff') format('woff'); 
+  font-display:swap;
+}
