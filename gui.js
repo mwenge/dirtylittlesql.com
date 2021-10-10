@@ -312,14 +312,15 @@ vsvFileElm.onchange = function () {
       return;
     }
     worker.onmessage = function (e) {
+      console.log(e.data);
       if (e.data.progress) {
         statusElm.textContent = e.data.progress;
         return;
       }
       // Show the schema of the loaded database
       updateSidebar();
-      if (e.data.vsvFileDetail) {
-        let sql = "SELECT * FROM \"" + e.data.vsvFileDetail.tableName + "\" LIMIT 10";
+      if (e.data.vsvtable) {
+        let sql = "SELECT * FROM \"" + e.data.vsvtable + "\" LIMIT 10";
         createCell(cellsContainer, sql);
         return;
       }
