@@ -49,6 +49,7 @@ html {
   right: 0px;
   height: 90vh;
   width: 18%;
+  overflow-y: auto;
 }
 .sidebar>table {
   border: none;
