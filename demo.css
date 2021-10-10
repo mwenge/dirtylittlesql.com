@@ -148,6 +148,26 @@ h1 {
 }
 
 footer {
+  font-family: 'ABCFavoritMono';
 	font-size:.8em;
 	color: #222;
+}
+
+@media (prefers-color-scheme: dark) {
+  .status, .banner, body, footer {
+    color: #eee;
+    background: #121212;
+  }
+
+  body a {
+    color: #809fff;
+  }
+  .button, .logo {
+    background-color: orange;
+    color: black;
+  }
+	.button {
+		background: linear-gradient(orange, orange);
+		border: 1px solid orange;
+	}
 }

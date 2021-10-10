@@ -3,7 +3,7 @@ var csvFileElm = document.getElementById('csvfile');
 var vsvFileElm = document.getElementById('vsvfile');
 var vsvButton = document.getElementById('vsvbutton');
 var dbButton = document.getElementById('dbbutton');
-var sidebarElm = document.getElementById('sidebar');
+var sidebar = document.getElementById('sidebar');
 var statusElm = document.getElementById('status');
 var cellsContainer = document.getElementById("container");
 
@@ -124,6 +124,12 @@ var createCell = function () {
     container.appendChild(commandsElm);
     c.appendChild(container);
 
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+    let selectedTheme = "default";
+    if (prefersDarkScheme.matches) {
+      selectedTheme = "3024-night";
+    }
     // Add syntax highlihjting to the textarea
     var editor = CodeMirror.fromTextArea(commandsElm, {
       mode: 'text/x-mysql',
@@ -133,6 +139,7 @@ var createCell = function () {
       lineNumbers: true,
       matchBrackets: true,
       autofocus: true,
+      theme: selectedTheme,
       extraKeys: {
         "Ctrl-Enter": execEditorContents,
         "Ctrl-Space": "autocomplete",
@@ -444,4 +451,3 @@ function updateSidebar() {
     "  ORDER BY 1; ";
 	execute(schemaSQL+ ';');
 }
-
