@@ -153,6 +153,10 @@ footer {
 	color: #222;
 }
 
+.output::-webkit-scrollbar-track {
+    background-color: #999;
+}
+
 @media (prefers-color-scheme: dark) {
   .status, .banner, body, footer {
     color: #eee;
@@ -170,4 +174,11 @@ footer {
 		background: linear-gradient(orange, orange);
 		border: 1px solid orange;
 	}
+  .output::-webkit-scrollbar {
+      width: 10px;
+  }
+  .output::-webkit-scrollbar-track {
+      background-color: #222;
+  }
+
 }

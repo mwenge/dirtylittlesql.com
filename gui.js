@@ -283,7 +283,7 @@ vsvFileElm.onchange = function () {
       return toHex(enc.encode(suffixToSep.get(suff))[0]);
     }
     // Use the first 10,000 bytes for guessing.
-    let d = data.slice(0,10000);
+    let d = new Uint8Array(data.slice(0,10000));
     return toHex(guessSeparatorFromData(d));
   }
 
