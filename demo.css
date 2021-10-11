@@ -183,4 +183,8 @@ footer {
   .sidebar::-webkit-scrollbar-track {
       background-color: #222;
   }
+  :root {
+    color-scheme: dark;
+  }
+
 }
