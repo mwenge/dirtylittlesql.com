@@ -86,7 +86,7 @@ function guessSeparator(filename, data) {
 
 function getDataAndSeparator(d, filename) {
   let suff = filename.slice(-3);
-  if (["xls", "lsx"].includes(suff)) {
+  if (["xls", "lsx","ods"].includes(suff)) {
     return [convertExcelToCSV(d, filename), '2c'];
   }
   let sep = guessSeparator(filename, d);

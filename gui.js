@@ -223,19 +223,28 @@ vsvButton.onclick = function () {
   vsvFileElm.click();
 };
 vsvFileElm.onchange = function () {
+  function error(e) {
+    console.log(e);
+    statusElm.textContent = e;
+  }
 
 	var f = vsvFileElm.files[0];
+  if (!f) { return; }
 	var r = new FileReader();
 	r.onload = function () {
     let [data, sep] = getDataAndSeparator(r.result, f.name);
 		if (sep == "-1") {
-			console.log("Can't determine the separator from the file suffix or contents.");
+			error("Can't determine a field delimiter from the file suffix or contents.");
       return;
     }
     worker.onmessage = function (e) {
       console.log(e.data);
       if (e.data.progress) {
         statusElm.textContent = e.data.progress;
+        return;
+      }
+      if (e.data.error) {
+        statusElm.textContent = e.data.error;
         return;
       }
       // Show the schema of the loaded database
@@ -255,6 +264,7 @@ vsvFileElm.onchange = function () {
       }
     }
 	}
+  statusElm.textContent = "Loading " + f.name;
 	r.readAsArrayBuffer(f);
 }
 
