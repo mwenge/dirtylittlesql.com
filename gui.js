@@ -5,14 +5,13 @@ var vsvButton = document.getElementById('vsvbutton');
 var dbButton = document.getElementById('dbbutton');
 var sidebar = document.getElementById('sidebar');
 var statusElm = document.getElementById('status');
-var cellsContainer = document.getElementById("container");
 
 
 var lastCellID = 0;
 hotkeys('ctrl+b', function (event, handler){
     switch (handler.key) {
             case 'ctrl+b':
-              createCell(cellsContainer);
+              addCell();
               break;
             default: break;
           }
@@ -56,7 +55,7 @@ CodeMirror.hint.sql = function (editor) {
 
 // Create a cell for entering commands
 var createCell = function () {
-	return function (c, sql) {
+	return function (container, sql) {
     // Connect to the HTML element we 'print' to
     function print(text) {
       output.innerHTML = text.replace(/\n/g, '<br>');
@@ -101,28 +100,35 @@ var createCell = function () {
       noerror()
       execute(editor.getValue() + ';');
     }
-    function addCell() {
-      createCell(container.parentElement);
+    function addCellBelow() {
+      var c = document.createElement('div');
+      container.insertAdjacentElement('afterend', c);
+      createCell(c);
+    }
+    function addCellAbove() {
+      var c = document.createElement('div');
+      container.insertAdjacentElement('beforebegin', c);
+      createCell(c);
     }
     function deleteCell() {
-      if (container.id == 1) {
+      if (!container.previousSibling) {
         return;
       }
+      let prev = container.previousSibling;
       container.parentElement.removeChild(container);
+      prev.firstChild.focus();
     }
 
-		var container = document.createElement('div');
     lastCellID++;
     container.id = lastCellID;
 
     // Add the command pane
 		var commandsElm = document.createElement('textarea');
-    if (!sql) {
+    if (!container.previousSibling) {
       sql = '-- Add a file to the database and then write a query here!';
     }
     commandsElm.textContent = sql;
     container.appendChild(commandsElm);
-    c.appendChild(container);
 
     const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -144,15 +150,18 @@ var createCell = function () {
         "Ctrl-Enter": execEditorContents,
         "Ctrl-Space": "autocomplete",
         "Ctrl-S": savedb,
-        "Ctrl-B": addCell,
+        "Ctrl-B": addCellBelow,
+        "Ctrl-A": addCellAbove,
         "Ctrl-D": deleteCell,
+        "Tab": false,
+        "Shift-Tab": false,
       }
     });
 
     // Add the tips line
 		var tipsElm = document.createElement('span');
     tipsElm.className = "tips";
-    tipsElm.textContent = "Press Ctrl-Space to autocomplete, Ctrl-Enter to execute, Ctrl-B to add a new cell, Ctrl-D to delete this cell.";
+    tipsElm.textContent = "Press Ctrl-Space to autocomplete, Ctrl-Enter to execute, Ctrl-B to add a new cell below, Ctrl-A to add one above, Ctrl-D to delete this cell.";
     container.appendChild(tipsElm);
 
     // Add the error pane
@@ -166,7 +175,14 @@ var createCell = function () {
     container.appendChild(output);
 	}
 }();
-createCell(cellsContainer);
+
+function addCell(sql) {
+  var c = document.createElement('div');
+  var cellsContainer = document.getElementById("container");
+  cellsContainer.appendChild(c);
+  createCell(c, sql);
+}
+addCell();
 
 // Create an HTML table
 var tableCreate = function () {
@@ -251,7 +267,7 @@ vsvFileElm.onchange = function () {
       updateSidebar();
       if (e.data.vsvtable) {
         let sql = "SELECT * FROM \"" + e.data.vsvtable + "\" LIMIT 10";
-        createCell(cellsContainer, sql);
+        addCell(sql);
         return;
       }
     };
