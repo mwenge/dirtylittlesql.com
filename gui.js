@@ -125,7 +125,9 @@ var createCell = function () {
     // Add the command pane
 		var commandsElm = document.createElement('textarea');
     if (!container.previousSibling) {
-      sql = '-- Add a file to the database and then write a query here!';
+      sql = '-- Add a file to the database and then write a query here!\n\n';
+    } else if (!sql) {
+      sql = '\n\n\n';
     }
     commandsElm.textContent = sql;
     container.appendChild(commandsElm);

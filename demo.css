@@ -157,6 +157,10 @@ footer {
     background-color: #999;
 }
 
+.CodeMirror-focused {
+  border: 0.5px solid lightblue;
+}
+
 @media (prefers-color-scheme: dark) {
   .status, .banner, body, footer {
     color: #eee;
@@ -185,6 +189,9 @@ footer {
   }
   :root {
     color-scheme: dark;
+  }
+  .CodeMirror-focused {
+    border: 0.5px solid #b37400;
   }
 
 }
