@@ -157,6 +157,18 @@ footer {
     background-color: #999;
 }
 
+.hints {
+  padding-left: 2vw;
+  font-family: 'ABCFavoritMono';
+  font-size: 0.6vw;
+  display: inline-block;
+}
+.sidebar>table {
+  display: inline-table;
+  border: none;
+  border-collapse: collapse;
+}
+
 .CodeMirror-focused {
   border: 0.5px solid lightblue;
 }
