@@ -53,9 +53,39 @@ CodeMirror.hint.sql = function (editor) {
     return result;
 };
 
+function hasHistory() {
+  return localStorage.getItem('qHistLast');
+}
+
+function indexForMostRecentItemInHistory() {
+  let mostRecent = localStorage.getItem('qHistLast');
+  return mostRecent ? parseInt(mostRecent, 10) : 0;
+}
+
+function indexForNewItemInHistory() {
+  let mostRecent = localStorage.getItem('qHistLast');
+  mostRecent = mostRecent ? parseInt(mostRecent, 10) + 1 : 0;
+  return mostRecent;
+}
+
+function saveQueryToHistory(sql, result) {
+  let index = indexForNewItemInHistory();
+  let k = 'qH' + String(index);
+  localStorage.setItem(k, JSON.stringify({sql: encodeURIComponent(sql), result: encodeURIComponent(result)}));
+  localStorage.setItem('qHistLast', index);
+}
+
+function getItemFromHistory(i) {
+  let k = 'qH' + String(i);
+  let item = JSON.parse(localStorage.getItem(k));
+  return { sql: decodeURIComponent(item.sql), result: decodeURIComponent(item.result) }; 
+}
+
 // Create a cell for entering commands
 var createCell = function () {
 	return function (container, sql) {
+    let currentPosInHistory = -1;
+
     // Connect to the HTML element we 'print' to
     function print(text) {
       output.innerHTML = text.replace(/\n/g, '<br>');
@@ -66,7 +96,44 @@ var createCell = function () {
       errorElm.textContent = e.message;
       output.textContent = "";
     }
-
+    function saveToHistory() {
+      let s = editor.getDoc().getValue();
+      let r = output.innerHTML;
+      saveQueryToHistory(s,r);
+      currentPosInHistory = -1;
+    }
+    function getPreviousItemInHistory() {
+      // Reached the end of the history or there's no history?
+      if (!currentPosInHistory || !hasHistory()) {
+        return;
+      }
+      // Not currently looking at the history.
+      if (currentPosInHistory == -1) {
+        currentPosInHistory = indexForMostRecentItemInHistory() + 1;
+      }
+      currentPosInHistory--;
+      let h = getItemFromHistory(currentPosInHistory);
+      editor.getDoc().setValue(h.sql);
+      output.innerHTML = h.result;
+    }
+    function getNextItemInHistory() {
+      // There's no history
+      if (!hasHistory()) {
+        return;
+      }
+      // Reached the most recent query in history.
+      if (currentPosInHistory >= indexForMostRecentItemInHistory()) {
+        return;
+      }
+      // Not looking at the history.
+      if (currentPosInHistory == -1) {
+        return;
+      }
+      currentPosInHistory++;
+      let h = getItemFromHistory(currentPosInHistory);
+      editor.getDoc().setValue(h.sql);
+      output.innerHTML = h.result;
+    }
     function noerror() {
       errorElm.style.height = '0';
     }
@@ -82,13 +149,14 @@ var createCell = function () {
           error({message: event.data.error});
           return;
         }
-
+      
         tic();
         output.innerHTML = "";
         for (var i = 0; i < results.length; i++) {
           output.appendChild(tableCreate(results[i].columns, results[i].values));
         }
         toc("Displaying results");
+        saveToHistory();
         updateSidebar();
       }
       worker.postMessage({ action: 'exec', sql: commands });
@@ -155,6 +223,8 @@ var createCell = function () {
         "Ctrl-B": addCellBelow,
         "Ctrl-A": addCellAbove,
         "Ctrl-D": deleteCell,
+        "Alt-Left": getPreviousItemInHistory,
+        "Alt-Right": getNextItemInHistory,
         "Tab": false,
         "Shift-Tab": false,
       }
@@ -163,7 +233,15 @@ var createCell = function () {
     // Add the tips line
 		var tipsElm = document.createElement('span');
     tipsElm.className = "tips";
-    tipsElm.textContent = "Press Ctrl-Space to autocomplete, Ctrl-Enter to execute, Ctrl-B to add a new cell below, Ctrl-A to add one above, Ctrl-D to delete this cell.";
+    tipsElm.innerHTML = 
+                          "<b>Ctrl-Enter:</b> Run query, " +
+                          "<b>Ctrl-Space:</b> Autocomplete, " +
+                          "<b>Ctrl-B:</b> Add cell below, " +
+                          "<b>Ctrl-A:</b> Add cell above, " +
+                          "<b>Ctrl-D:</b> Delete this cell." +
+                          "<b>Alt-Left:</b> Previous query in history." +
+                          "<b>Alt-Right:</b> Next query in history." +
+                          "";
     container.appendChild(tipsElm);
 
     // Add the error pane
