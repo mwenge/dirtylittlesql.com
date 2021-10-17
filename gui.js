@@ -186,6 +186,15 @@ var createCell = function () {
       container.parentElement.removeChild(container);
       prev.firstChild.focus();
     }
+    const generateCSV = () => {
+      if (!output.firstChild || (output.firstChild.tagName != "TABLE")) {
+        return;
+      }
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.table_to_sheet(output.firstChild);
+      XLSX.utils.book_append_sheet(wb, ws, 'test');
+      XLSX.writeFile(wb, 'result.csv');
+    }
 
     lastCellID++;
     container.id = lastCellID;
@@ -223,6 +232,7 @@ var createCell = function () {
         "Ctrl-B": addCellBelow,
         "Ctrl-A": addCellAbove,
         "Ctrl-D": deleteCell,
+        "Ctrl-S": generateCSV,
         "Alt-Left": getPreviousItemInHistory,
         "Alt-Right": getNextItemInHistory,
         "Tab": false,
