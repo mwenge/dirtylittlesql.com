@@ -70,15 +70,9 @@ function indexForNewItemInHistory() {
 
 function saveQueryToHistory(sql, result) {
   let index = indexForNewItemInHistory();
-  let k = 'qH' + String(index);
-  localStorage.setItem(k, JSON.stringify({sql: encodeURIComponent(sql), result: encodeURIComponent(result)}));
   localStorage.setItem('qHistLast', index);
-}
-
-function getItemFromHistory(i) {
-  let k = 'qH' + String(i);
-  let item = JSON.parse(localStorage.getItem(k));
-  return { sql: decodeURIComponent(item.sql), result: decodeURIComponent(item.result) }; 
+  let k = 'qH' + String(index);
+  localforage.setItem(k, {sql:sql, result: result});
 }
 
 // Create a cell for entering commands
@@ -96,11 +90,21 @@ var createCell = function () {
       errorElm.textContent = e.message;
       output.textContent = "";
     }
+    async function getItemFromHistory(i) {
+      let k = 'qH' + String(i);
+      const item = await localforage.getItem(k);
+      editor.getDoc().setValue(item.sql);
+      output.innerHTML = item.result;
+    }
+
     function saveToHistory() {
       let s = editor.getDoc().getValue();
       let r = output.innerHTML;
+      if (!r) {
+        return;
+      }
       saveQueryToHistory(s,r);
-      currentPosInHistory = -1;
+      currentPosInHistory = indexForMostRecentItemInHistory();
     }
     function getPreviousItemInHistory() {
       // Reached the end of the history or there's no history?
@@ -112,9 +116,7 @@ var createCell = function () {
         currentPosInHistory = indexForMostRecentItemInHistory() + 1;
       }
       currentPosInHistory--;
-      let h = getItemFromHistory(currentPosInHistory);
-      editor.getDoc().setValue(h.sql);
-      output.innerHTML = h.result;
+      getItemFromHistory(currentPosInHistory);
     }
     function getNextItemInHistory() {
       // There's no history
@@ -130,9 +132,7 @@ var createCell = function () {
         return;
       }
       currentPosInHistory++;
-      let h = getItemFromHistory(currentPosInHistory);
-      editor.getDoc().setValue(h.sql);
-      output.innerHTML = h.result;
+      getItemFromHistory(currentPosInHistory);
     }
     function noerror() {
       errorElm.style.height = '0';
