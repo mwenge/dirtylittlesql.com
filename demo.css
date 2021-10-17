@@ -163,8 +163,7 @@ footer {
   font-size: 0.6vw;
   display: inline-block;
 }
-.sidebar>table {
-  display: inline-table;
+.hints>table {
   border: none;
   border-collapse: collapse;
 }
