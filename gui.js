@@ -17,7 +17,7 @@ hotkeys('ctrl+b', function (event, handler){
           }
 });
 // Start the worker in which sql.js will run
-var worker = new Worker("worker.sql-asm.js");
+var worker = new Worker("worker.sql-wasm.js");
 
 // Open a database
 worker.postMessage({ action: 'open' });
