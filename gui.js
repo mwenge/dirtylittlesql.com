@@ -68,13 +68,6 @@ function indexForNewItemInHistory() {
   return mostRecent;
 }
 
-function saveQueryToHistory(sql, result) {
-  let index = indexForNewItemInHistory();
-  localStorage.setItem('qHistLast', index);
-  let k = 'qH' + String(index);
-  localforage.setItem(k, {sql:sql, result: result});
-}
-
 // Create a cell for entering commands
 var createCell = function () {
 	return function (container, sql) {
@@ -90,6 +83,14 @@ var createCell = function () {
       errorElm.textContent = e.message;
       output.textContent = "";
     }
+    async function saveQueryToHistory(sql, result) {
+      let index = indexForNewItemInHistory();
+      let k = 'qH' + String(index);
+      await localforage.setItem(k, {sql:sql, result: result});
+      localStorage.setItem('qHistLast', index);
+      currentPosInHistory = index;
+    }
+
     async function getItemFromHistory(i) {
       let k = 'qH' + String(i);
       const item = await localforage.getItem(k);
@@ -97,14 +98,21 @@ var createCell = function () {
       output.innerHTML = item.result;
     }
 
-    function saveToHistory() {
+    async function saveToHistory() {
       let s = editor.getDoc().getValue();
       let r = output.innerHTML;
+      // If there's no result to save, don't save to history.
       if (!r) {
         return;
       }
-      saveQueryToHistory(s,r);
       currentPosInHistory = indexForMostRecentItemInHistory();
+      let k = 'qH' + String(currentPosInHistory);
+      const item = await localforage.getItem(k);
+      // If the sql is the same as the most recent item, don't save.
+      if (item.sql == s) {
+        return;
+      }
+      saveQueryToHistory(s,r);
     }
     function getPreviousItemInHistory() {
       // Reached the end of the history or there's no history?
