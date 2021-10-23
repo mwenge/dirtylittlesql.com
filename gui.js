@@ -346,7 +346,7 @@ vsvFileElm.onchange = function () {
   if (!f) { return; }
 	var r = new FileReader();
 	r.onload = function () {
-    let [data, sep] = getDataAndSeparator(r.result, f.name);
+    let [data, sep, header] = getDataAndSeparator(r.result, f.name);
 		if (sep == "-1") {
 			error("Can't determine a field delimiter from the file suffix or contents.");
       return;
@@ -371,10 +371,12 @@ vsvFileElm.onchange = function () {
     };
     for (let d of data) {
       try {
-        worker.postMessage({ action: 'createVSVTable', buffer: d[0], fileName: d[1], separator: sep, quick: true }, [d[0]]);
+        worker.postMessage({ action: 'createVSVTable', buffer: d[0], fileName: d[1],
+          separator: sep, quick: true, header:header }, [d[0]]);
       }
       catch (exception) {
-        worker.postMessage({ action: 'createVSVTable', buffer: d[0], fileName: d[1], separator: sep, quick: true });
+        worker.postMessage({ action: 'createVSVTable', buffer: d[0], fileName: d[1],
+          separator: sep, quick: true, header:header });
       }
     }
 	}

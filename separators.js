@@ -4,6 +4,7 @@ const suffixToSep = new Map([
   ["psv", "|"],
 ]);
 var enc = new TextEncoder(); // always utf-8
+var dec = new TextDecoder(); // always utf-8
 
 let toHex = x => x.toString(16).padStart(2,'0')
 function getPossibleSeps(seps) {
@@ -76,21 +77,48 @@ function convertExcelToCSV(d, filename) {
 function guessSeparator(filename, data) {
   let suff = filename.slice(-3);
   if (suffixToSep.has(suff)) {
-    return toHex(enc.encode(suffixToSep.get(suff))[0]);
+    return [toHex(enc.encode(suffixToSep.get(suff))[0]), suffixToSep.get(suff)];
   }
   // Use the first 10,000 bytes for guessing.
   let d = new Uint8Array(data.slice(0,10000));
-  return toHex(guessSeparatorFromData(d));
+  let s = guessSeparatorFromData(d);
+  return [toHex(s), dec.decode(s)];
 }
 
 
 function getDataAndSeparator(d, filename) {
   let suff = filename.slice(-3);
   if (["xls", "lsx","ods"].includes(suff)) {
-    return [convertExcelToCSV(d, filename), '2c'];
+    let dt = convertExcelToCSV(d, filename);
+    let header = hasHeader(dt, ',');
+    return [convertExcelToCSV(d, filename), '2c', header];
   }
-  let sep = guessSeparator(filename, d);
-  return [[[d, filename]], sep];
+  let [sep, sepAsText] = guessSeparator(filename, d);
+  let header = hasHeader(d, sepAsText);
+  console.log(sep, sepAsText, header);
+  return [[[d, filename]], sep, header];
+}
+
+function hasHeader(data, s) {
+  let d = new Uint8Array(data.slice(0,10000));
+  d = new Uint8Array(d.slice(0,d.indexOf(0x0a)));
+  let st = dec.decode(d);
+  let a = st.split(s);
+
+  let u = [...new Set(a)];
+  // Duplicate values in the header line suggest it is not a header.
+  if (u.length != a.length) {
+    return false;
+  }
+
+  // More than one non-alphanumeric field suggests not a header.
+  var an = new RegExp("[^0-9\-\.]\+");
+  let nums = a.filter(x => an.test(x) == false).length;
+  if (nums > 1) {
+    return false;
+  }
+
+  return true;
 }
 
 function testGuessSeparatorFromData() {
@@ -109,4 +137,30 @@ function testGuessSeparatorFromData() {
   d = enc.encode("a,\"b,e\",c\n1,2,3\n4,5,6");
   result = toHex(guessSeparatorFromData(d));
   console.log((result == '2c' ? 'Pass. ' : 'FAIL. ') + 'Detect CSV with double quotes in header ' + '. Actual result:', result);
+}
+
+function testHeaderDetection() {
+  let d = enc.encode("a,b,c\n1,2,3\n4,5,6");
+  let result = hasHeader(d,',');
+  console.log((result == true ? 'Pass. ' : 'FAIL. ') + 'Detect header ' + '. Actual result:', result);
+
+  d = enc.encode("a,b,b\n1,2,3\n4,5,6");
+  result = hasHeader(d,',');
+  console.log((result == false ? 'Pass. ' : 'FAIL. ') + 'Detect duplicate items in header ' + '. Actual result:', result);
+
+  d = enc.encode("a,1,2\n1,2,3\n4,5,6");
+  result = hasHeader(d,',');
+  console.log((result == false ? 'Pass. ' : 'FAIL. ') + 'Detect numbers header ' + '. Actual result:', result);
+
+  d = enc.encode("a,b,c\n1,2,3\n4,5,6");
+  result = hasHeader(d,',');
+  console.log((result == true ? 'Pass. ' : 'FAIL. ') + 'Detect numbers header ' + '. Actual result:', result);
+
+  d = enc.encode("a,b1,c2\n1,2,3\n4,5,6");
+  result = hasHeader(d,',');
+  console.log((result == true ? 'Pass. ' : 'FAIL. ') + 'Detect numbers header ' + '. Actual result:', result);
+
+  d = enc.encode("2021-02-01,2021-02-01,c\n1,2,3\n4,5,6");
+  result = hasHeader(d,',');
+  console.log((result == fail ? 'Pass. ' : 'FAIL. ') + 'Detect numbers header ' + '. Actual result:', result);
 }
