@@ -172,37 +172,38 @@ footer {
   border: 0.5px solid lightblue;
 }
 
-@media (prefers-color-scheme: dark) {
-  .status, .banner, body, footer {
-    color: #eee;
-    background: #121212;
-  }
+/*@media (prefers-color-scheme: dark) {*/
 
-  body a {
-    color: #809fff;
-  }
-  .button, .logo {
-    background-color: orange;
-    color: black;
-  }
-	.button {
-		background: linear-gradient(orange, orange);
-		border: 1px solid orange;
-	}
-  .output::-webkit-scrollbar {
-      width: 10px;
-  }
-  .output::-webkit-scrollbar-track {
-      background-color: #222;
-  }
-  .sidebar::-webkit-scrollbar-track {
-      background-color: #222;
-  }
-  :root {
-    color-scheme: dark;
-  }
-  .CodeMirror-focused {
-    border: 0.5px solid #b37400;
-  }
-
+/* Use dark mode by default, it's prettier */
+.status, .banner, body, footer {
+  color: #eee;
+  background: #121212;
 }
+
+body a {
+  color: #809fff;
+}
+.button, .logo {
+  background-color: orange;
+  color: black;
+}
+.button {
+  background: linear-gradient(orange, orange);
+  border: 1px solid orange;
+}
+.output::-webkit-scrollbar {
+    width: 10px;
+}
+.output::-webkit-scrollbar-track {
+    background-color: #222;
+}
+.sidebar::-webkit-scrollbar-track {
+    background-color: #222;
+}
+:root {
+  color-scheme: dark;
+}
+.CodeMirror-focused {
+  border: 0.5px solid #b37400;
+}
+
