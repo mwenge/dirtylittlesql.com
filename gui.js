@@ -114,7 +114,7 @@ var createCell = function () {
       let k = 'qH' + String(currentPosInHistory);
       const item = await localforage.getItem(k);
       // If the sql is the same as the most recent item, don't save.
-      if (item.sql == s) {
+      if (!item || item.sql == s) {
         return;
       }
       saveQueryToHistory(s,r);
