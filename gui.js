@@ -224,7 +224,9 @@ var createCell = function () {
 
     const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
-    let selectedTheme = "default";
+    // let selectedTheme = "default";
+    // Use dark theme by default
+    let selectedTheme = "3024-night";
     if (prefersDarkScheme.matches) {
       selectedTheme = "3024-night";
     }
