@@ -83,9 +83,14 @@ var createCell = function () {
       errorElm.textContent = e.message;
       output.textContent = "";
     }
+    let storageLimit = 1024 * 128; // 128k
     async function saveQueryToHistory(sql, result) {
       let index = indexForNewItemInHistory();
       let k = 'qH' + String(index);
+      // Don't store exessively large results.
+      if (result.length > storageLimit) {
+        result = "Result was too large to store without impacting performance."
+      }
       await localforage.setItem(k, {sql:sql, result: result});
       localStorage.setItem('qHistLast', index);
       currentPosInHistory = index;
