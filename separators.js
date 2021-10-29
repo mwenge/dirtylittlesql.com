@@ -82,7 +82,16 @@ function guessSeparator(filename, data) {
   // Use the first 10,000 bytes for guessing.
   let d = new Uint8Array(data.slice(0,10000));
   let s = guessSeparatorFromData(d);
-  return [toHex(s), dec.decode(s)];
+
+  // Special case decoding tab to '\t'.
+  let h = toHex(s);
+  if (s == 9) {
+    s = '\t';
+  } else {
+    s = dec.decode(new Uint8Array([s]));
+  }
+
+  return [h, s];
 }
 
 
