@@ -1,8 +1,6 @@
-var dbFileElm = document.getElementById('dbfile');
 var csvFileElm = document.getElementById('csvfile');
 var vsvFileElm = document.getElementById('vsvfile');
 var vsvButton = document.getElementById('vsvbutton');
-var dbButton = document.getElementById('dbbutton');
 var sidebar = document.getElementById('sidebar');
 var statusElm = document.getElementById('status');
 
@@ -316,16 +314,17 @@ function toc(msg) {
 }
 
 // Load a file into our DB by guessing the separators it uses.
-dbButton.onclick = function () {
-  dbFileElm.click();
+vsvButton.onclick = function () {
+  vsvFileElm.click();
 };
-// Load a db from a file
-dbFileElm.onchange = function () {
-	var f = dbFileElm.files[0];
-	var r = new FileReader();
-	r.onload = function () {
+vsvFileElm.onchange = function () {
+  function error(e) {
+    console.log(e);
+    statusElm.textContent = e;
+  }
+	function loadDB() {
 		worker.onmessage = function () {
-			toc("Loading database from file");
+      statusElm.textContent = "Loaded " + f.name;
       updateSidebar();
 		};
 		tic();
@@ -336,23 +335,19 @@ dbFileElm.onchange = function () {
 			worker.postMessage({ action: 'open', buffer: r.result});
 		}
 	}
-	r.readAsArrayBuffer(f);
-}
-
-// Load a file into our DB by guessing the separators it uses.
-vsvButton.onclick = function () {
-  vsvFileElm.click();
-};
-vsvFileElm.onchange = function () {
-  function error(e) {
-    console.log(e);
-    statusElm.textContent = e;
-  }
 
 	var f = vsvFileElm.files[0];
   if (!f) { return; }
 	var r = new FileReader();
 	r.onload = function () {
+
+    // If it's a sqlite DB load it.
+    let suff = f.name.slice(-3);
+    if (suff == ".db") {
+      loadDB();
+      return;
+    }
+
     let [data, sep, header] = getDataAndSeparator(r.result, f.name);
 		if (sep == "-1") {
 			error("Can't determine a field delimiter from the file suffix or contents.");
