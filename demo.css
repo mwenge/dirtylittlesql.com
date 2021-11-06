@@ -4,6 +4,18 @@
   font-weight: 400;
   src: url(ABCFavoritMono-Light.woff) format('truetype');
 }
+@media print {
+  .banner,.intro,.sidebar,footer,.tips {
+    visibility: hidden;
+  }
+  @page {
+    size: A3;
+  }
+  table {
+    height:95%;
+    font-size: 10px;
+  }
+}
 html {
 	margin:auto;
   margin-top: 5vh;
@@ -70,7 +82,12 @@ body{
 	padding: 10px 20px;
 }
 
+.intro {
+  font-family: 'ABCFavoritMono';
+  font-size: 0.7vw;
+}
 .tips {
+  font-family: 'ABCFavoritMono';
   font-size: 0.5vw;
 }
 

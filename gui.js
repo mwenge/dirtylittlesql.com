@@ -3,6 +3,7 @@ var vsvFileElm = document.getElementById('vsvfile');
 var vsvButton = document.getElementById('vsvbutton');
 var sidebar = document.getElementById('sidebar');
 var statusElm = document.getElementById('status');
+var intro = document.getElementById('intro');
 
 
 var lastCellID = 0;
@@ -150,6 +151,9 @@ var createCell = function () {
     }
     // Run a command in the database
     function execute(commands) {
+      // Hide the intro text when we run a query
+      intro.style.display = "none";
+
       statusElm.textContent = "";
       tic();
       worker.onerror = error;
