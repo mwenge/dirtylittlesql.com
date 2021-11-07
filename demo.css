@@ -86,6 +86,9 @@ body{
   font-family: 'ABCFavoritMono';
   font-size: 0.7vw;
 }
+.intro>ul {
+  font-size: 0.65vw;
+}
 .tips {
   font-family: 'ABCFavoritMono';
   font-size: 0.5vw;
