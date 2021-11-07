@@ -82,6 +82,7 @@ body{
 	padding: 10px 20px;
 }
 
+
 .intro {
   font-family: 'ABCFavoritMono';
   font-size: 0.7vw;
@@ -105,6 +106,7 @@ h1 {
   display: inline-block;
   height: 5vh;
 }
+.button { cursor: pointer; }
 .button {
 	color: white;
 	background: linear-gradient(#000, #222);
