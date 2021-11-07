@@ -105,10 +105,11 @@ h1 {
   margin: 0 0.5vw;
   display: inline-block;
   height: 5vh;
+  cursor: pointer;
 }
-.button { cursor: pointer; }
 .button {
 	color: white;
+  cursor: pointer;
 	background: linear-gradient(#000, #222);
   background-color: black;
 	border: 1px solid #222;
