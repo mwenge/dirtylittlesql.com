@@ -346,8 +346,7 @@ vsvFileElm.onchange = function () {
 	r.onload = function () {
 
     // If it's a sqlite DB load it.
-    let suff = f.name.slice(-3);
-    if (suff == ".db") {
+    if ([".db", ".sqlite"].some(e => f.name.endsWith(e))) {
       loadDB();
       return;
     }
