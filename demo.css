@@ -42,7 +42,7 @@ html {
   z-index: 99999;
 }
 .logo {
-  font-family: 'ABCFavoritMono';
+  font-family: 'ABCFavoritMono',monospace;
   font-size: 0.6vw;
   font-weight: bold;
   display: inline-block;
