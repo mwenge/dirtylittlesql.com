@@ -216,12 +216,25 @@ body a {
 }
 .output::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
+}
+.output::-webkit-scrollbar-thumb {
+    background-color: #333;
 }
 .output::-webkit-scrollbar-track {
     background-color: #222;
 }
+.output::-webkit-scrollbar-corner {
+    background-color: #333;
+}
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #333;
+}
 .sidebar::-webkit-scrollbar-track {
     background-color: #222;
+}
+.sidebar::-webkit-scrollbar-corner {
+    background-color: #333;
 }
 :root {
   color-scheme: dark;
