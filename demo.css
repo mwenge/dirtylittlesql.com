@@ -236,6 +236,10 @@ body a {
 .sidebar::-webkit-scrollbar-corner {
     background-color: #333;
 }
+.sidebar,.output {
+  scrollbar-color: #333 #222;
+}
+
 :root {
   color-scheme: dark;
 }
