@@ -7561,9 +7561,33 @@ global.getDataAndSeparator = function (d, filename) {
   }
 
   let [sep, sepAsText] = guessSeparator(filename, d);
+  let i = indexToFirstLine(d, sepAsText);
+  d = d.slice(i);
   let header = hasHeader(d, sepAsText);
-  console.log(sep, sepAsText, header);
   return [[[d, filename]], sep, header];
+}
+
+function indexToFirstLine(data, sep) {
+  let d = new Uint8Array(data.slice(0,10000));
+  let indexOfFirstSep = d.indexOf(enc.encode(sep)[0]);
+  let lineBreak = d.indexOf(0x0a);
+  // Line break occurs after the first instance of the separator, so there
+  // are no leading lines.
+  if (lineBreak > indexOfFirstSep) {
+    return 0;
+  }
+  // Search for the first line break before the first occurence
+  // of our separator.
+  let prevLineBreak = 0;
+  while (lineBreak < indexOfFirstSep) {
+    prevLineBreak = lineBreak + 1;
+    lineBreak = d.indexOf(0x0a, lineBreak + 1);
+    // Just in case there's no line break at all.
+    if (lineBreak < 0) {
+      return 0;
+    }
+  }
+  return prevLineBreak;
 }
 
 function hasHeader(data, s) {
