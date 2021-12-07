@@ -6,6 +6,8 @@ var statusElm = document.getElementById('status');
 var intro = document.getElementById('intro');
 
 
+var editors = new Map([]);
+
 var lastCellID = 0;
 hotkeys('ctrl+b', function (event, handler){
     switch (handler.key) {
@@ -194,12 +196,16 @@ var createCell = function () {
       createCell(c);
     }
     function deleteCell() {
-      if (!container.previousSibling) {
+      if (container.parentElement.children.length <= 1) {
         return;
       }
-      let prev = container.previousSibling;
+      let prev = (container.previousSibling) ? container.previousSibling : container.nextSibling;
       container.parentElement.removeChild(container);
-      prev.firstChild.focus();
+
+      // Set focus on the adjacent editor cell.
+      editors.delete(container.id);
+      var n = editors.get(prev.id);
+      n.focus();
     }
     const generateCSV = () => {
       if (!output.firstChild || (output.firstChild.tagName != "TABLE")) {
@@ -256,6 +262,7 @@ var createCell = function () {
         "Shift-Tab": false,
       }
     });
+    editors.set(container.id, editor);
 
     // Add the tips line
 		var tipsElm = document.createElement('span');
