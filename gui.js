@@ -195,6 +195,9 @@ var createCell = function () {
       container.insertAdjacentElement('beforebegin', c);
       createCell(c);
     }
+    function openFile() {
+      vsvFileElm.click();
+    }
     function deleteCell() {
       if (container.parentElement.children.length <= 1) {
         return;
@@ -256,6 +259,7 @@ var createCell = function () {
         "Ctrl-A": addCellAbove,
         "Ctrl-D": deleteCell,
         "Ctrl-S": generateCSV,
+        "Ctrl-O": openFile,
         "Alt-Left": getPreviousItemInHistory,
         "Alt-Right": getNextItemInHistory,
         "Tab": false,
