@@ -58,6 +58,7 @@
     </div>
   </div>
   <div class="sidebar" id="sidebar"></div>
+  <header class="status" id="status">
   <div class="intro" id="intro">
     <b style="padding: 3px;color: black; background-color:orange;">Load very large text files, very quickly, so that you can run SQL queries on them straight away.</b>
     <ul>
@@ -70,11 +71,13 @@
     </ul>
 
     <b id="okay" style="margin-left: 50%;padding: 3px 20px;color: black; background-color:orange;">OK</b>
+    <br>
+    <br>
     <script>okay.onclick = function() {intro.style.display = "none"};</script>
+    <script>intro.onclick = function() {intro.style.display = "none"};</script>
     <style>#okay {cursor: pointer;}</style>
-
   </div>
-  <header class="status" id="status"></header>
+  </header>
   <main>
     <div id="container"></div>
   </main>

@@ -25,7 +25,6 @@ html {
 
 .status {
   background-color: white;
-  height: 3vh;
   z-index: 99999;
   font-family: 'ABCFavoritMono';
   font-size: 0.6vw;
