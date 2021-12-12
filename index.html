@@ -68,6 +68,12 @@
         <li><b>Convenient</b> Your queries and results are stored so you can use <b>Alt-Left</b> and <b>Alt-Right</b> to review and rerun them.</a>
         <li><b>Notebook-Like</b> Use <b>Ctrl-a</b> and <b>Ctrl-b</b> and to add as many new query cells as you like, where you like, and create a notebook for saving results to a PDF.</a>
       </ul>
+      <b style="display: block; padding: 5px;color: black; background-color:orange;">Under the hood.</b>
+      <ul>
+        <li><b>SQLite</b> The database is a web-assembly version of SQLite called <a href='https://github.com/sql-js/sql.js'>sql.js</a> that runs in your browser.</li>
+        <li><b>VSV</b> It also uses a SQLite extension called <a href="http://www.dessus.com/files/vsv.c">VSV</a> to load delimited text files quickly. </li>
+        <li><b>Github</b> You can view the git repository for this project at the <a href='https://github.com/mwenge/dirtylittlesql.com'>author's github page.</a>.</li>
+      </ul>
     </div>
   </div>
   <header class="status" id="status">
@@ -79,8 +85,6 @@
   <script src="3rdparty/codemirror/sql.min.js"></script>
 
   <footer>
-    by <a href='https://github.com/mwenge/dirtylittlesql.com'>mwenge</a> and
-    based on <a href='https://github.com/sql-js/sql.js'>sql.js</a>.
   </footer>
 
   <script type="text/javascript" src="separators.js"></script>
