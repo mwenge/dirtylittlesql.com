@@ -274,9 +274,6 @@ var createCell = function () {
     tipsElm.innerHTML = 
                           "<b>Ctrl-Enter:</b> Run query, " +
                           "<b>Ctrl-Space:</b> Autocomplete, " +
-                          "<b>Ctrl-B:</b> Add cell below, " +
-                          "<b>Ctrl-A:</b> Add cell above, " +
-                          "<b>Ctrl-D:</b> Delete this cell." +
                           "<b>Alt-Left:</b> Previous query in history." +
                           "<b>Alt-Right:</b> Next query in history." +
                           "";
