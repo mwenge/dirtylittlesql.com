@@ -2,6 +2,7 @@
 
 var CACHE_NAME = 'DirtyLittleSQL';
 var urlsToCache = [
+  'sql-wasm.wasm',
   'separators-pre.js',
   'worker.sql-wasm.js',
   'serviceworker.js',
