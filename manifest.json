@@ -3,12 +3,12 @@
     "name": "Dirty Little SQL",
     "icons": [
         {
-            "src": "favicon.png",
+            "src": "dirtylittlesql-192.png",
             "type": "image/png",
             "sizes": "192x192"
             },
         {
-            "src": "favicon.png",
+            "src": "dirtylittlesql-512.png",
             "type": "image/png",
             "sizes": "512x512"
             }
