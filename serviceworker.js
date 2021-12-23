@@ -7,6 +7,7 @@ var urlsToCache = [
   'worker.sql-wasm.js',
   'serviceworker.js',
   '3rdparty/json2csv.js',
+  '3rdparty/chart.min.js',
   '3rdparty/localforage.min.js',
   '3rdparty/hotkeys.min.js',
   '3rdparty/xlsx.full.min.js',

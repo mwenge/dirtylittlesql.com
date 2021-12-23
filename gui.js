@@ -151,6 +151,101 @@ var createCell = function () {
     function noerror() {
       errorElm.style.height = '0';
     }
+
+    // Create an HTML table
+    var tableCreate = function () {
+      function valconcat(vals, tagName) {
+        if (vals.length === 0) return '';
+        var open = '<' + tagName + '>', close = '</' + tagName + '>';
+        return open + vals.join(close + open) + close;
+      }
+      return function (columns, values) {
+        var tbl = document.createElement('table');
+        var html = '<thead>' + valconcat(columns, 'th') + '</thead>';
+        var rows = values.map(function (v) { return valconcat(v, 'td'); });
+        html += '<tbody>' + valconcat(rows, 'tr') + '</tbody>';
+        tbl.innerHTML = html;
+        return tbl;
+      }
+    }();
+
+    var createTableOutput = function () {
+      return function (results) {
+        output.style.height = "auto";
+        output.style.width = "auto";
+        for (var i = 0; i < results.length; i++) {
+          output.appendChild(tableCreate(results[i].columns, results[i].values));
+        }
+      }
+    }();
+
+    // Create an HTML chart
+    var createLineChart = function () {
+      var cycleColor = (function () {
+        var frequency = .9;
+        var i = 0;
+        return function () {
+          i++;
+          var red   = Math.round(Math.sin(frequency*i + 0) * 55 + 200);
+          var green = Math.round(Math.sin(frequency*i + 2) * 55 + 200);
+          var blue  = Math.round(Math.sin(frequency*i + 4) * 55 + 200);
+          return "rgb(" + red + ", " + green + ", " + blue + ")";
+        }
+      })();
+      function createData(columns, values) {
+        const labels = values.map(x => x[0]);
+        const data = {
+          labels: labels,
+          datasets: createDatasets(columns, values)
+        };
+        return data;
+      }
+      function createDatasets(columns, values) {
+        var datasets = []
+        for (var i = 1; i < columns.length; i++) {
+          datasets.push({
+            label: columns[i],
+            data: values.map(x => x[i]),
+            fill: false,
+            borderColor: cycleColor(),
+            tension: 0.1,
+            maintainAspectRatio: false,
+          });
+        }
+        return datasets;
+      }
+      return function (columns, values) {
+        var lc = document.createElement('canvas');
+        lc.id = "myChart"
+        const ctx = lc.getContext('2d');
+        const config = {
+          type: 'line',
+          data: createData(columns, values)
+        };
+        const myChart = new Chart(ctx, config);
+        return lc;
+      }
+    }();
+
+    var createLineChartOutput = function () {
+      return function (results) {
+        output.style.height = "40vh";
+        output.style.width = "80vh";
+        for (var i = 0; i < results.length; i++) {
+          output.appendChild(createLineChart(results[i].columns, results[i].values));
+        }
+      }
+    }();
+
+    let createSpecifiedOutput = null;
+    function queryWithTableResults() {
+      createSpecifiedOutput = createTableOutput;
+      execEditorContents();
+    }
+    function queryWithLineChartResults() {
+      createSpecifiedOutput = createLineChartOutput;
+      execEditorContents();
+    }
     // Run a command in the database
     function execute(commands) {
       // Hide the intro text when we run a query
@@ -169,9 +264,7 @@ var createCell = function () {
       
         tic();
         output.innerHTML = "";
-        for (var i = 0; i < results.length; i++) {
-          output.appendChild(tableCreate(results[i].columns, results[i].values));
-        }
+        createSpecifiedOutput(results);
         toc("Displaying results");
         saveToHistory();
         updateSidebar();
@@ -252,7 +345,8 @@ var createCell = function () {
       autofocus: true,
       theme: selectedTheme,
       extraKeys: {
-        "Ctrl-Enter": execEditorContents,
+        "Ctrl-Enter": queryWithTableResults,
+        "Alt-Enter": queryWithLineChartResults,
         "Ctrl-Space": "autocomplete",
         "Ctrl-S": savedb,
         "Ctrl-B": addCellBelow,
@@ -298,23 +392,6 @@ function addCell(sql) {
   createCell(c, sql);
 }
 addCell();
-
-// Create an HTML table
-var tableCreate = function () {
-	function valconcat(vals, tagName) {
-		if (vals.length === 0) return '';
-		var open = '<' + tagName + '>', close = '</' + tagName + '>';
-		return open + vals.join(close + open) + close;
-	}
-	return function (columns, values) {
-		var tbl = document.createElement('table');
-		var html = '<thead>' + valconcat(columns, 'th') + '</thead>';
-		var rows = values.map(function (v) { return valconcat(v, 'td'); });
-		html += '<tbody>' + valconcat(rows, 'tr') + '</tbody>';
-		tbl.innerHTML = html;
-		return tbl;
-	}
-}();
 
 // Performance measurement functions
 var tictime;

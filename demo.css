@@ -152,6 +152,7 @@ h1 {
 .output {
 	overflow: auto;
   max-height: 40vh;
+  position: relative;
 }
 
 .output>table {

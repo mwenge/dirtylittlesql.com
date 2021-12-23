@@ -17,6 +17,7 @@
   <script type="text/javascript" src="3rdparty/xlsx.full.min.js"></script>
   <script type="text/javascript" src="3rdparty/localforage.min.js"></script>
   <script src="3rdparty/hotkeys.min.js"></script>
+  <script src="3rdparty/chart.min.js"></script>
 </head>
 
 <body>
@@ -68,12 +69,17 @@
         <li><b>Flexible</b> Load as many files as you like and treat them all as tables in the same database. Field delimiters are automatically detected.
           <li><b>Many File Formats</b> Works with Excel, OpenOffice files, JSON files, and even SQLite db files too! You can use <b>Ctrl-s</b> to save your query results as a CSV.</a>
         <li><b>Convenient</b> Your queries and results are stored so you can use <b>Alt-Left</b> and <b>Alt-Right</b> to review and rerun them.</a>
+        <li><b>Fancy</b> You can get the results of your queries as charts. Just use <b>Alt-Enter</b> instead of <b>Ctrl-Enter</b> when running the query. The first column in your results is treated as the X-Axis, and all subsequent columns as values to be plotted on the Y axis. 
         <li><b>Notebook-Like</b> Use <b>Ctrl-a</b> and <b>Ctrl-b</b> and to add as many new query cells as you like, where you like, and create a notebook for saving results to a PDF.</a>
       </ul>
       <b style="display: block; padding: 5px;color: black; background-color:orange;">Under the hood.</b>
       <ul>
-        <li><b>SQLite</b> The database is a web-assembly version of SQLite called <a href='https://github.com/sql-js/sql.js'>sql.js</a> that runs in your browser.</li>
-        <li><b>VSV</b> It also uses a SQLite extension called <a href="http://www.dessus.com/files/vsv.c">VSV</a> to load delimited text files quickly. </li>
+        <li><b><a href='https://github.com/sql-js/sql.js'>sql.js</a></b> The database is a web-assembly version of SQLite called sql.js that runs in your browser.</li>
+        <li><b><a href="http://www.dessus.com/files/vsv.c">VSV</a></b> It also uses a SQLite extension called vsv to load delimited text files quickly. </li>
+        <li><b><a href="https://codemirror.net">Codemirror</a></b> Syntax highlighting</li>
+        <li><b><a href="https://sheetjs.com">sheet.js</a></b> Excel and Openoffice support.</li>
+        <li><b><a href="https://chartjs.com">chart.js</a></b> Charts </li>
+        <li><b><a href="https://github.com/localForage/localForage">LocalForage</a></b> IndexedDB for efficient local storage.</li>
         <li><b>Github</b> You can view the git repository for this project at the <a href='https://github.com/mwenge/dirtylittlesql.com'>author's github page.</a>.</li>
       </ul>
     </div>
