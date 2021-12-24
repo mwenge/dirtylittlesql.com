@@ -6,6 +6,7 @@ var urlsToCache = [
   'separators-pre.js',
   'worker.sql-wasm.js',
   'serviceworker.js',
+  'tips.js',
   '3rdparty/json2csv.js',
   '3rdparty/chart.min.js',
   '3rdparty/localforage.min.js',

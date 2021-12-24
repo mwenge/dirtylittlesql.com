@@ -321,7 +321,8 @@ var createCell = function () {
     if (!container.previousSibling) {
       sql = '-- Add a file to the database and then write a query here!\n\n';
     } else if (!sql) {
-      sql = '\n\n\n';
+      let t = randomTips.next().value;
+      sql = t ? t : '\n\n\n';
     }
     commandsElm.textContent = sql;
     container.appendChild(commandsElm);
