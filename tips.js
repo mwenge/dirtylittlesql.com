@@ -1,10 +1,10 @@
 const tips = [
       "-- To get a chart instead of a table for your result, run the query with Alt-Enter.\n" +
       "-- The first column in your results will be treated as the X axis of the chart.\n" +
-      "-- The remaining columns will be treated as values to plot on the chart.\n\n"
-      ,
-      "-- You can use Ctrl-S to save the result of your query to a CSV file.\n\n"
-      ,
+      "-- The remaining columns will be treated as values to plot on the chart.\n\n" ,
+      "-- Use Ctrl-S to save the result of your query to a CSV file.\n\n" ,
+      "-- Use Tab and Shift-Tab to move between cells.\n\n" ,
+      "-- Use Ctrl-P to save a print-friendly version of your notebook to PDF.\n\n" ,
       "-- Use Alt-Left and Alt-Right to move left and right in your query history.\n\n"
 ];
 function* makeShuffleGenerator(array) {
