@@ -179,19 +179,59 @@ var createCell = function () {
       }
     }();
 
+    var cycleColor = (function () {
+      var frequency = .9;
+      var i = 0;
+      return function () {
+        i++;
+        var red   = Math.round(Math.sin(frequency*i + 0) * 55 + 200);
+        var green = Math.round(Math.sin(frequency*i + 2) * 55 + 200);
+        var blue  = Math.round(Math.sin(frequency*i + 4) * 55 + 200);
+        return "rgb(" + red + ", " + green + ", " + blue + ")";
+      }
+    })();
+
+    // Create an HTML pivot chart
+    var createPivotChart = function () {
+      function createData(columns, values) {
+        const labels = [...new Set(values.map(x => x[0]))];
+        const data = {
+          labels: labels,
+          datasets: createDatasets(columns, values)
+        };
+        return data;
+      }
+      function createDatasets(columns, values) {
+        var datasets = []
+        const pivots = [...new Set(values.map(x => x[1]))];
+        pivots.forEach(p => {
+          datasets.push({
+            label: p,
+            data: values.filter(x => x[1] == p).map(x => x[2]),
+            fill: false,
+            borderColor: cycleColor(),
+            tension: 0.1,
+            maintainAspectRatio: false,
+            responsive: true,
+          });
+        });
+        return datasets;
+      }
+      return function (columns, values) {
+        var lc = document.createElement('canvas');
+        lc.id = "myChart"
+        const ctx = lc.getContext('2d');
+        const config = {
+          type: 'line',
+          data: createData(columns, values)
+        };
+        const myChart = new Chart(ctx, config);
+        return lc;
+      }
+    }();
+
     // Create an HTML chart
     var createLineChart = function () {
-      var cycleColor = (function () {
-        var frequency = .9;
-        var i = 0;
-        return function () {
-          i++;
-          var red   = Math.round(Math.sin(frequency*i + 0) * 55 + 200);
-          var green = Math.round(Math.sin(frequency*i + 2) * 55 + 200);
-          var blue  = Math.round(Math.sin(frequency*i + 4) * 55 + 200);
-          return "rgb(" + red + ", " + green + ", " + blue + ")";
-        }
-      })();
       function createData(columns, values) {
         const labels = values.map(x => x[0]);
         const data = {
@@ -238,6 +278,16 @@ var createCell = function () {
       }
     }();
 
+    var createPivotChartOutput = function () {
+      return function (results) {
+        output.style.maxHeight = "initial";
+        output.style.width = "70vw";
+        for (var i = 0; i < results.length; i++) {
+          output.appendChild(createPivotChart(results[i].columns, results[i].values));
+        }
+      }
+    }();
+
     let createSpecifiedOutput = null;
     function queryWithTableResults() {
       createSpecifiedOutput = createTableOutput;
@@ -245,6 +295,10 @@ var createCell = function () {
     }
     function queryWithLineChartResults() {
       createSpecifiedOutput = createLineChartOutput;
+      execEditorContents();
+    }
+    function queryWithPivotChartResults() {
+      createSpecifiedOutput = createPivotChartOutput;
       execEditorContents();
     }
     // Run a command in the database
@@ -349,6 +403,7 @@ var createCell = function () {
       extraKeys: {
         "Ctrl-Enter": queryWithTableResults,
         "Alt-Enter": queryWithLineChartResults,
+        "Alt-P": queryWithPivotChartResults,
         "Ctrl-Space": "autocomplete",
         "Ctrl-S": savedb,
         "Ctrl-B": addCellBelow,
