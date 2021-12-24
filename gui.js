@@ -210,6 +210,7 @@ var createCell = function () {
             borderColor: cycleColor(),
             tension: 0.1,
             maintainAspectRatio: false,
+            responsive: true,
           });
         }
         return datasets;
@@ -229,9 +230,8 @@ var createCell = function () {
 
     var createLineChartOutput = function () {
       return function (results) {
-        output.style.height = "40vh";
+        output.style.maxHeight = "initial";
         output.style.width = "70vw";
-        output.style.overflow = "initial";
         for (var i = 0; i < results.length; i++) {
           output.appendChild(createLineChart(results[i].columns, results[i].values));
         }
