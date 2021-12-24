@@ -230,7 +230,8 @@ var createCell = function () {
     var createLineChartOutput = function () {
       return function (results) {
         output.style.height = "40vh";
-        output.style.width = "80vh";
+        output.style.width = "70vw";
+        output.style.overflow = "initial";
         for (var i = 0; i < results.length; i++) {
           output.appendChild(createLineChart(results[i].columns, results[i].values));
         }
@@ -319,10 +320,10 @@ var createCell = function () {
     // Add the command pane
 		var commandsElm = document.createElement('textarea');
     if (!container.previousSibling) {
-      sql = '-- Add a file to the database and then write a query here!\n\n';
+      sql = '-- Tip!\n-- Add a file to the database and then write a query here!\n\n';
     } else if (!sql) {
       let t = randomTips.next().value;
-      sql = t ? t : '\n\n\n';
+      sql = t ? '-- Tip!\n' + t : '\n\n\n';
     }
     commandsElm.textContent = sql;
     container.appendChild(commandsElm);
