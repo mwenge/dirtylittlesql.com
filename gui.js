@@ -194,20 +194,22 @@ var createCell = function () {
     // Create an HTML pivot chart
     var createPivotChart = function () {
       function createData(columns, values) {
+        // A list of unique labels for the x axis, from the results' first column.
         const labels = [...new Set(values.map(x => x[0]))];
         const data = {
           labels: labels,
-          datasets: createDatasets(columns, values)
+          datasets: createDatasets(columns, values, labels)
         };
         return data;
       }
-      function createDatasets(columns, values) {
+      function createDatasets(columns, values, labels) {
         var datasets = []
         const pivots = [...new Set(values.map(x => x[1]))];
+        const valueForLabelPivot = new Map(values.map(x => [x[0]+x[1], x[2]]));
         pivots.forEach(p => {
           datasets.push({
             label: p,
-            data: values.filter(x => x[1] == p).map(x => x[2]),
+            data: labels.map(l => valueForLabelPivot.has(l+p) ? valueForLabelPivot.get(l+p) : 0),
             fill: false,
             borderColor: cycleColor(),
             tension: 0.1,
