@@ -171,7 +171,7 @@ var createCell = function () {
 
     var createTableOutput = function () {
       return function (results) {
-        output.style.height = "auto";
+        output.style.maxHeight = "40vh";
         output.style.width = "auto";
         for (var i = 0; i < results.length; i++) {
           output.appendChild(tableCreate(results[i].columns, results[i].values));
