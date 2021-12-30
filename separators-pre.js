@@ -8,6 +8,7 @@ const suffixToSep = new Map([
   ["csv", ","],
   ["tsv", "\t"],
   ["psv", "|"],
+  ["ssv", ";"],
 ]);
 var enc = new TextEncoder(); // always utf-8
 var dec = new TextDecoder(); // always utf-8
