@@ -281,6 +281,40 @@ var createCell = function () {
             enabled: true
           },
           pagination: true,
+          style: {
+            table: {
+              'background-color': '#121212',
+              'color': '#eee',
+            },
+            td: {
+              'background-color': '#121212',
+              'color': '#eee',
+            },
+            th: {
+              'background-color': 'black',
+              'color': '#eee',
+            },
+            container: {
+              'background-color': '#121212',
+              'color': '#eee',
+            },
+            header: {
+              'background-color': '#121212',
+              'color': '#eee',
+            },
+            footer: {
+              'background-color': '#121212',
+              'color': '#eee',
+            },
+            thead: {
+              'background-color': 'black',
+              'color': '#eee',
+            },
+            tbody: {
+              'background-color': '#121212',
+              'color': '#eee',
+            },
+          }
         }).render(output).forceRender();
       }
     }();
