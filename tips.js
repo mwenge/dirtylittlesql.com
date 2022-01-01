@@ -8,6 +8,8 @@ const tips = [
       "-- The second column in your results will be treated as the legends to plot.\n" +
       "-- The third column will be treated as values to plot on the chart for each legend.\n\n" ,
 
+      "-- Use Alt-T to get results in a pretty table that you can filter and sort.\n\n" ,
+
       "-- Use Ctrl-S to save the result of your query to a CSV file.\n\n" ,
 
       "-- Use Tab and Shift-Tab to move between cells.\n\n" ,

@@ -247,3 +247,13 @@ body a {
   border: 0.5px solid #b37400;
 }
 
+/*
+ FIXME: Override font color for gridjs, which is in light mode with rest of
+ page in dark mode. We need a simple dark mode for grid js.
+ */
+.gridjs-pages > button {
+  color: black;
+}
+.gridjs-search > input {
+  color: black;
+}

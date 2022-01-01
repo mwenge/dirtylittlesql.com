@@ -270,6 +270,30 @@ var createCell = function () {
       }
     }();
 
+    // Create a pretty table
+    var createPrettyTable = function () {
+      return function (columns, values, output) {
+        new gridjs.Grid({
+          columns: columns,
+          data: values,
+          sort: true,
+          search: {
+            enabled: true
+          },
+          pagination: true,
+        }).render(output).forceRender();
+      }
+    }();
+
+    var createPrettyTableOutput = function () {
+      return function (results) {
+        output.style.maxHeight = "initial";
+        for (var i = 0; i < results.length; i++) {
+          createPrettyTable(results[i].columns, results[i].values, output);
+        }
+      }
+    }();
+
     var createLineChartOutput = function () {
       return function (results) {
         output.style.maxHeight = "initial";
@@ -291,6 +315,10 @@ var createCell = function () {
     }();
 
     let createSpecifiedOutput = null;
+    function queryWithPrettyTableResults() {
+      createSpecifiedOutput = createPrettyTableOutput;
+      execEditorContents();
+    }
     function queryWithTableResults() {
       createSpecifiedOutput = createTableOutput;
       execEditorContents();
@@ -406,6 +434,7 @@ var createCell = function () {
         "Ctrl-Enter": queryWithTableResults,
         "Alt-Enter": queryWithLineChartResults,
         "Alt-P": queryWithPivotChartResults,
+        "Alt-T": queryWithPrettyTableResults,
         "Ctrl-Space": "autocomplete",
         "Ctrl-S": savedb,
         "Ctrl-B": addCellBelow,
