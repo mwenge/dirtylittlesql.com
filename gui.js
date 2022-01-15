@@ -488,10 +488,11 @@ var createCell = function () {
 		var tipsElm = document.createElement('span');
     tipsElm.className = "tips";
     tipsElm.innerHTML = 
-                          "<b>Ctrl-Enter:</b> Run query, " +
-                          "<b>Ctrl-Space:</b> Autocomplete, " +
-                          "<b>Alt-Left:</b> Previous query in history." +
-                          "<b>Alt-Right:</b> Next query in history." +
+                          "<b>Ctrl-Enter:</b> Plain Query Results, " +
+                          "<b>Alt-T:</b> Rich Query Results, " +
+                          "<b>Alt-Enter:</b> Line Chart Results, " +
+                          "<b>Alt-P:</b> Pivot Chart Results, " +
+                          "<b>Ctrl-Space:</b> Autocomplete. " +
                           "";
     container.appendChild(tipsElm);
 
