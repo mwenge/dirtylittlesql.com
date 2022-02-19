@@ -478,11 +478,50 @@ var createCell = function () {
         "Ctrl-O": openFile,
         "Alt-Left": getPreviousItemInHistory,
         "Alt-Right": getNextItemInHistory,
-        "Tab": false,
-        "Shift-Tab": false,
+        "Tab": "indentMore",
+        "Esc" : function() {
+          editor.getWrapperElement().focus();
+        },
       }
     });
+    editor.getWrapperElement().setAttribute("tabindex", "0");
     editors.set(container.id, editor);
+
+    editor.getWrapperElement().className += " editorContainer";
+    // Handle navigation between cells.
+    editor.getWrapperElement().addEventListener('keydown', (event) => {
+      // Ignore the event if we're not navigating the cell elements.
+      let w = editor.getWrapperElement();
+      if (w.className != document.activeElement.className) {
+        return;
+      }
+      const keyName = event.key;
+      if (keyName == 'Enter') {
+        event.preventDefault();
+        event.stopPropagation();
+        editor.focus();
+      }
+      if (keyName == 'ArrowUp') {
+        event.preventDefault();
+        event.stopPropagation();
+        console.log(document.activeElement);
+        var p = editor.getWrapperElement().parentElement;
+        var ps = p.previousSibling;
+        if (!ps) return;
+        var n = ps.children[1];
+        n.focus();
+      }
+      if (keyName == 'ArrowDown') {
+        event.preventDefault();
+        event.stopPropagation();
+        console.log(document.activeElement);
+        var p = editor.getWrapperElement().parentElement;
+        var ps = p.nextSibling;
+        if (!ps) return;
+        var n = ps.children[1];
+        n.focus();
+      }
+    });
 
     // Add the tips line
 		var tipsElm = document.createElement('span');
