@@ -362,6 +362,7 @@ var createCell = function () {
       execEditorContents();
     }
     function queryWithPivotChartResults() {
+      console.log("Querying pivot");
       createSpecifiedOutput = createPivotChartOutput;
       execEditorContents();
     }
@@ -467,7 +468,7 @@ var createCell = function () {
       extraKeys: {
         "Ctrl-Enter": queryWithTableResults,
         "Alt-Enter": queryWithLineChartResults,
-        "Alt-P": queryWithPivotChartResults,
+        "Alt-I": queryWithPivotChartResults,
         "Alt-T": queryWithPrettyTableResults,
         "Ctrl-Space": "autocomplete",
         "Ctrl-S": savedb,
@@ -540,7 +541,7 @@ var createCell = function () {
                           "<b>Ctrl-Enter:</b> Plain Query Results, " +
                           "<b>Alt-T:</b> Rich Query Results, " +
                           "<b>Alt-Enter:</b> Line Chart Results, " +
-                          "<b>Alt-P:</b> Pivot Chart Results, " +
+                          "<b>Alt-I:</b> Pivot Chart Results, " +
                           "<b>Ctrl-Space or Tab:</b> Autocomplete. " +
                           "";
     container.appendChild(tipsElm);
