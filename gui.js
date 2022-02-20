@@ -478,7 +478,17 @@ var createCell = function () {
         "Ctrl-O": openFile,
         "Alt-Left": getPreviousItemInHistory,
         "Alt-Right": getNextItemInHistory,
-        "Tab": "indentMore",
+        "Tab": function(cm,e) {
+          function hasNonWhiteSpace(s) { return /[^\s]/g.test(s); }
+          let to = cm.getCursor();
+          let from = {line: to.line, ch: 0};
+          let pt = cm.getRange(from, to);
+          if (hasNonWhiteSpace(pt)) {
+            CodeMirror.commands.autocomplete(cm);
+          } else {
+            CodeMirror.commands.insertSoftTab(cm);
+          }
+        },
         "Esc" : function() {
           editor.getWrapperElement().focus();
         },
@@ -531,7 +541,7 @@ var createCell = function () {
                           "<b>Alt-T:</b> Rich Query Results, " +
                           "<b>Alt-Enter:</b> Line Chart Results, " +
                           "<b>Alt-P:</b> Pivot Chart Results, " +
-                          "<b>Ctrl-Space:</b> Autocomplete. " +
+                          "<b>Ctrl-Space or Tab:</b> Autocomplete. " +
                           "";
     container.appendChild(tipsElm);
 
