@@ -472,9 +472,6 @@ var createCell = function () {
         "Alt-T": queryWithPrettyTableResults,
         "Ctrl-Space": "autocomplete",
         "Ctrl-S": savedb,
-        "Ctrl-B": addCellBelow,
-        "Ctrl-A": addCellAbove,
-        "Ctrl-D": deleteCell,
         "Ctrl-S": generateCSV,
         "Ctrl-O": openFile,
         "Alt-Left": getPreviousItemInHistory,
@@ -498,8 +495,8 @@ var createCell = function () {
     editor.getWrapperElement().setAttribute("tabindex", "0");
     editors.set(container.id, editor);
 
-    editor.getWrapperElement().className += " editorContainer";
     // Handle navigation between cells.
+    editor.getWrapperElement().className += " editorContainer";
     editor.getWrapperElement().addEventListener('keydown', (event) => {
       // Ignore the event if we're not navigating the cell elements.
       let w = editor.getWrapperElement();
@@ -507,6 +504,21 @@ var createCell = function () {
         return;
       }
       const keyName = event.key;
+      if (keyName == 'a') {
+        event.preventDefault();
+        event.stopPropagation();
+        addCellAbove();
+      }
+      if (keyName == 'b') {
+        event.preventDefault();
+        event.stopPropagation();
+        addCellBelow();
+      }
+      if (keyName == 'd') {
+        event.preventDefault();
+        event.stopPropagation();
+        deleteCell();
+      }
       if (keyName == 'Enter') {
         event.preventDefault();
         event.stopPropagation();
