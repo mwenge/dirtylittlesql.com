@@ -16,6 +16,8 @@ const tips = [
 
       "-- Use Ctrl-P to save a print-friendly version of your notebook to PDF.\n\n" ,
 
+      "-- If you have a column called e.g. \"Card Number\" with values like '459380212349876' you can convert it to text using CAST(CAST(\"Card Number\" AS INT) AS VARCHAR).\n\n" ,
+
       "-- Use Alt-Left and Alt-Right to move left and right in your query history.\n\n"
 ];
 function* makeShuffleGenerator(array) {
