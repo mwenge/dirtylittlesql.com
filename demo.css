@@ -261,7 +261,7 @@ body a {
   color: black;
 }
 .CodeMirror-cursor {
-  background-color: yellow !important;
+  background-color: orange !important;
   opacity: 80% !important;
   width: 2px;
 }
