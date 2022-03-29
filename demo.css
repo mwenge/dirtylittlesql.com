@@ -260,3 +260,8 @@ body a {
 .gridjs-search > input {
   color: black;
 }
+.CodeMirror-cursor {
+  background-color: yellow !important;
+  opacity: 80% !important;
+  width: 2px;
+}
