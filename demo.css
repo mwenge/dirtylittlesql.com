@@ -19,7 +19,7 @@
 html {
 	margin:auto;
   margin-top: 5vh;
-  margin-left: 1vw;
+  margin-left: calc(0.2rem + 1vw);
 	width:80%;
 }
 
@@ -27,7 +27,7 @@ html {
   background-color: white;
   z-index: 99999;
   font-family: 'ABCFavoritMono';
-  font-size: 0.6vw;
+  font-size: calc(0.5rem + 0.35vw);
   color: blue;
 }
 .banner {
@@ -42,10 +42,10 @@ html {
 }
 .logo {
   font-family: 'ABCFavoritMono',monospace;
-  font-size: 0.6vw;
+  font-size: calc(0.5rem + 0.2vw);
   font-weight: bold;
   display: inline-block;
-  padding: 0 0.4vw;
+  padding: 0 calc(0.2rem + 0.4vw);
   color: white;
   background-color: black;
   vertical-align: center;
@@ -54,7 +54,7 @@ html {
 
 .sidebar {
   font-family: 'ABCFavoritMono';
-  font-size: 0.7vw;
+  font-size: calc(0.4rem + 0.35vw);
   position: fixed;
   top: 10vh;
   right: 0px;
@@ -84,14 +84,14 @@ body{
 
 .intro {
   font-family: 'ABCFavoritMono';
-  font-size: 0.7vw;
+  font-size: calc(0.5rem + 0.3vw);
 }
 .intro>ul {
-  font-size: 0.68vw;
+  font-size: calc(0.5rem + 0.25vw);
 }
 .tips {
   font-family: 'ABCFavoritMono';
-  font-size: 0.7vw;
+  font-size: calc(0.5rem + 0.3vw);
 }
 
 h1 {
@@ -101,7 +101,7 @@ h1 {
 }
 
 .fileselect {
-  margin: 0 0.5vw;
+  margin: 0 calc(0.2rem + 0.25vw);
   display: inline-block;
   height: 5vh;
   cursor: pointer;
@@ -115,7 +115,7 @@ h1 {
 	padding: 7px;
 	transition: .3s;
 	font-family: ubuntu, sans-serif;
-	font-size: 1vw;
+	font-size: calc(0.5rem + 0.7vw);
   height: 5vh;
 }
 
@@ -181,9 +181,9 @@ footer {
 }
 
 .hints {
-  padding-left: 2vw;
+  padding-left: calc(0.2rem + 2vw);
   font-family: 'ABCFavoritMono';
-  font-size: 0.7vw;
+  font-size: calc(0.5rem + 0.3vw);
   display: inline-block;
 }
 .hints>table {
